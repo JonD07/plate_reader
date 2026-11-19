@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>plate_reader</name>
+  <version>0.1.0</version>
+  <description>
+    Offline US license-plate reader for an intruder-car-search robot.
+    Provides the read_plate service: give it a path to a .png of a car's
+    rear, get back the plate number, OCR confidence, issuing state and
+    car color. CPU-only (OpenCV + Tesseract), no network access needed.
+  </description>
+  <maintainer email="you@example.com">robot team</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>rosidl_default_generators</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>rosidl_default_runtime</depend>
+  <member_of_group>rosidl_interface_packages</member_of_group>
+
+  <exec_depend>ros2launch</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

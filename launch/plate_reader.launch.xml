@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!-- Foxy-compatible launch file. To point at a custom tessdata dir, either
+     set the TESSDATA_PREFIX environment variable or edit tessdata_path
+     below to the directory containing eng.traineddata. -->
+<launch>
+  <node pkg="plate_reader" type="plate_reader_node" name="plate_reader" output="screen">
+    <param name="tessdata_path" value=""/>
+  </node>
+</launch>

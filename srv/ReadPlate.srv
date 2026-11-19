@@ -1,0 +1,19 @@
+# Request: relative or absolute path to a .png captured by the robot
+string image_path
+---
+# Whether a plate was found and read
+bool success
+# Plate number (uppercase alphanumerics, no spaces)
+string plate_number
+# OCR confidence for the plate number, 0.0 - 1.0
+float64 confidence
+# Best-matching US state/territory printed on the plate (empty if unsure)
+string issuing_state
+# Fuzzy-match confidence for the state, 0.0 - 1.0
+float64 state_confidence
+# Raw OCR text of the plate's top strip (for the human operator to review)
+string state_raw
+# Dominant color of the car body near the plate
+string car_color
+# Human-readable status / error message
+string message
