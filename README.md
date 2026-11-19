@@ -1,10 +1,10 @@
-# Plate Reader ~ offline license-plate reader ROS2 node
-A ROS2 C++ service node for reading license plates. It takes the relative path of a `.png` showing the rear of a car, reads the license plate, and returns the plate number plus extra information and the car's color. The system is tuned for US-style plates.
+# Plate Reader ~ ROS2, offline license-plate reader
+A ROS2 C++ service node for reading license plates. It takes the relative path of a `.png` showing the rear of a car, reads the license plate, and returns the plate number plus the car's color. The system is tuned for US-style plates.
 
 Everything runs **offline on CPU** — OpenCV classical vision plus Tesseract OCR. No GPU and no internet.
 
 ## Limitations Warning
-This package is NOT guaranteed to correctly read a car license plate! The plate reader OFTEN FAILS and returns wrong numbers and letters. Human validation is required ever time this package is used!
+This package is NOT guaranteed to correctly read a car license plate! The plate reader OFTEN FAILS and returns wrong numbers and letters. Human validation is required every time this package is used!
 
 
 ## Dependencies
