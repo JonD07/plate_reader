@@ -490,7 +490,7 @@ const std::map<int, std::vector<std::string>> & plate_patterns()
 }
 
 bool is_letter(char c) { return c >= 'A' && c <= 'Z'; }
-bool is_digit(char c) { return c >= '0' && c <= '9'; }
+//bool is_digit(char c) { return c >= '0' && c <= '9'; }
 
 bool matches_pattern(const std::string & t)
 {
@@ -634,36 +634,36 @@ struct StateGuess
   std::string raw;
 };
 
-StateGuess ocr_state(tesseract::TessBaseAPI & api, const cv::Mat & warped)
-{
-  StateGuess best;
-  const int H = warped.rows;
-  for (double frac : {0.20, 0.25}) {
-    cv::Mat strip = warped(cv::Rect(0, 0, warped.cols, int(H * frac))).clone();
-    cv::Mat g;
-    cv::cvtColor(strip, g, cv::COLOR_BGR2GRAY);
-    cv::Mat bil;
-    cv::bilateralFilter(g, bil, 9, 60, 60);
-    cv::Mat up;
-    cv::resize(bil, up, cv::Size(), 4.0, 4.0, cv::INTER_LANCZOS4);
-    for (int psm : {7, 6}) {
-      api.SetPageSegMode(static_cast<tesseract::PageSegMode>(psm));
-      // clear the plate whitelist so spaces/letters OCR properly here
-      api.SetVariable("tessedit_char_whitelist", "");
-      api.SetImage(up.data, up.cols, up.rows, 1, up.step);
-      char * txt = api.GetUTF8Text();
-      std::string t = to_upper(txt ? txt : "");
-      delete[] txt;
-      t = letters_spaces_only(t);
-      if (t.empty()) continue;
-      for (const auto & st : us_states()) {
-        double r = similarity(t, st);
-        if (r > best.ratio) best = {st, r, t};
-      }
-    }
-  }
-  return best;
-}
+//StateGuess ocr_state(tesseract::TessBaseAPI & api, const cv::Mat & warped)
+//{
+//  StateGuess best;
+//  const int H = warped.rows;
+//  for (double frac : {0.20, 0.25}) {
+//    cv::Mat strip = warped(cv::Rect(0, 0, warped.cols, int(H * frac))).clone();
+//    cv::Mat g;
+//    cv::cvtColor(strip, g, cv::COLOR_BGR2GRAY);
+//    cv::Mat bil;
+//    cv::bilateralFilter(g, bil, 9, 60, 60);
+//    cv::Mat up;
+//    cv::resize(bil, up, cv::Size(), 4.0, 4.0, cv::INTER_LANCZOS4);
+//    for (int psm : {7, 6}) {
+//      api.SetPageSegMode(static_cast<tesseract::PageSegMode>(psm));
+//      // clear the plate whitelist so spaces/letters OCR properly here
+//      api.SetVariable("tessedit_char_whitelist", "");
+//      api.SetImage(up.data, up.cols, up.rows, 1, up.step);
+//      char * txt = api.GetUTF8Text();
+//      std::string t = to_upper(txt ? txt : "");
+//      delete[] txt;
+//      t = letters_spaces_only(t);
+//      if (t.empty()) continue;
+//      for (const auto & st : us_states()) {
+//        double r = similarity(t, st);
+//        if (r > best.ratio) best = {st, r, t};
+//      }
+//    }
+//  }
+//  return best;
+//}
 
 // ------------------------------------------------------------- color
 std::string car_color(const cv::Mat & img, const cv::Rect & plate)
@@ -839,10 +839,12 @@ PlateResult AlprEngine::read_plate(const cv::Mat & bgr)
   res.confidence = best.conf;
   res.bbox = best.bbox;
 
-  StateGuess sg = ocr_state(pimpl_->api, best.warped);
-  if (sg.ratio >= 0.6) res.issuing_state = sg.state;
-  res.state_confidence = sg.ratio;
-  res.state_raw = sg.raw;
+//  StateGuess sg = ocr_state(pimpl_->api, best.warped);
+//  if (sg.ratio >= 0.6) res.issuing_state = sg.state;
+//  res.state_confidence = sg.ratio;
+//  res.state_raw = sg.raw;
+  res.state_confidence = 0.0;
+  res.state_raw = "N/A";
   res.car_color = car_color(bgr, best.bbox);
   res.message = "ok";
   return res;
